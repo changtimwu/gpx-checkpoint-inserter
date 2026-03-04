@@ -54,8 +54,15 @@ def load_checkpoints(csv_file):
     return checkpoints
 
 
-def build_wpt_element(name, lat, lon, ele):
-    return f'  <wpt lat="{lat}" lon="{lon}">\n    <ele>{ele}</ele>\n    <name>{name}</name>\n  </wpt>'
+def build_wpt_element(name, lat, lon, ele, desc=""):
+    return (
+        f' <wpt lat="{lat}" lon="{lon}">\n'
+        f'  <name>{name}</name>\n'
+        f'  <desc>{desc}</desc>\n'
+        f'  <sym>Checkpoint</sym>\n'
+        f'  <type>Checkpoint</type>\n'
+        f' </wpt>'
+    )
 
 
 def print_checkpoints(content):
@@ -117,20 +124,24 @@ def douglas_peucker(points, tolerance_m):
 
 
 def build_simplified_gpx(points, simplified_indices, wpt_elements):
-    """Build a clean GPX string with simplified track and waypoints."""
+    """Build a clean GPX string with simplified track and waypoints.
+
+    GPX 1.1 schema requires: metadata > wpt > rte > trk, so waypoints come first.
+    """
     trkpts = [
-        f'      <trkpt lat="{points[i][0]:.6f}" lon="{points[i][1]:.6f}"><ele>{points[i][2]}</ele></trkpt>'
+        f'   <trkpt lat="{points[i][0]:.6f}" lon="{points[i][1]:.6f}"><ele>{points[i][2]}</ele></trkpt>'
         for i in simplified_indices
     ]
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
-        '<gpx creator="insert_checkpoints.py" version="1.1" xmlns="http://www.topografix.com/GPX/1/1">',
-        '  <trk>',
-        '    <trkseg>',
+        '<gpx creator="StravaGPX" version="1.1" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">',
+        *wpt_elements,          # <wpt> before <trk> per GPX 1.1 spec
+        ' <trk>',
+        '  <type>trail_running</type>',
+        '  <trkseg>',
         *trkpts,
-        '    </trkseg>',
-        '  </trk>',
-        *wpt_elements,
+        '  </trkseg>',
+        ' </trk>',
         '</gpx>',
     ]
     return "\n".join(lines)
@@ -191,7 +202,7 @@ def main():
         new_content = build_simplified_gpx(points, indices, wpt_elements)
     else:
         wpt_block = "\n".join(wpt_elements)
-        new_content = content.replace("</gpx>", wpt_block + "\n</gpx>")
+        new_content = content.replace("  <trk>", wpt_block + "\n  <trk>", 1)
 
     out_path = gpx_path.with_stem(gpx_path.stem + "_with_checkpoints")
     out_path.write_text(new_content, encoding="utf-8")
