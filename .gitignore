@@ -1,0 +1,9 @@
+# Generated GPX outputs
+*_with_checkpoints.gpx
+
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
