@@ -74,6 +74,18 @@ See [`checkpoints_sample.csv`](checkpoints_sample.csv) for a complete English ex
 
 Each checkpoint is matched to the track point whose cumulative distance is closest to the specified value, so minor rounding in the CSV is fine.
 
+## Example Files
+
+The following files from the 2026 XTRAIL Kenting 100KM race are included as a worked example:
+
+| File | Description |
+|------|-------------|
+| [`2026_XTRAIL_Kenting_100KM.gpx`](2026_XTRAIL_Kenting_100KM.gpx) | Original official GPX exported from LiveTrail |
+| [`2026_XTRAIL_Kenting_100KM_with_checkpoints.gpx`](2026_XTRAIL_Kenting_100KM_with_checkpoints.gpx) | Output produced by this utility — track simplified to 5m tolerance with Chinese checkpoints inserted from `checkpoints_zh.csv` |
+| [`checkpoints_zh.csv`](checkpoints_zh.csv) | Chinese checkpoint names and distances used to generate the above |
+| [`xtrail-100K-cheatsheet.jpg`](xtrail-100K-cheatsheet.jpg) | Race cheatsheet (English) |
+| [`xtrail-100K-cheatsheet-zh.jpg`](xtrail-100K-cheatsheet-zh.jpg) | Race cheatsheet (Chinese) |
+
 ## Examples
 
 ```bash

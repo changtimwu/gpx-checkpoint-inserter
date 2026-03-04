@@ -1,5 +1,6 @@
-# Generated GPX outputs
+# Generated GPX outputs (exclude examples)
 *_with_checkpoints.gpx
+!2026_XTRAIL_Kenting_100KM_with_checkpoints.gpx
 
 # macOS
 .DS_Store
