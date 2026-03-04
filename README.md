@@ -86,6 +86,9 @@ The following files from the 2026 XTRAIL Kenting 100KM race are included as a wo
 | [`xtrail-100K-cheatsheet.jpg`](xtrail-100K-cheatsheet.jpg) | Race cheatsheet (English) |
 | [`xtrail-100K-cheatsheet-zh.jpg`](xtrail-100K-cheatsheet-zh.jpg) | Race cheatsheet (Chinese) |
 
+![Race Cheatsheet (English)](xtrail-100K-cheatsheet.jpg)
+![Race Cheatsheet (Chinese)](xtrail-100K-cheatsheet-zh.jpg)
+
 ## Examples
 
 ```bash
